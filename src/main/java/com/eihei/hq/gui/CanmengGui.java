@@ -18,16 +18,12 @@ public class CanmengGui {
     private static final ResourceLocation CANMENG = new ResourceLocation(hq.MODID,
             "textures/gui/canmeng.png");
     public static final IGuiOverlay HUD_CANMENG = ((gui, poseStack, partialTick, width, height) -> {
-    int x = width/2;
-    int y = height;
-
-    RenderSystem.setShader(GameRenderer::getPositionShader);
-    RenderSystem.setShaderColor(1.0F,1.0F,1.0F,1.0F);
-    RenderSystem.setShaderTexture(0,CANMENG);
-
-    for(int i=0;i<10;i++){
-        GuiComponent.blit(poseStack,x-94 + (i * 9),y-54,0,0,12,12,12,12);
-    }
+        int x = width/5;
+        int y = height/5;
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShaderColor(1.0F,1.0F,1.0F,1.0F);
+        RenderSystem.setShaderTexture(0,CANMENG);
+        GuiComponent.blit(poseStack,x,y,0,0,32,32,32,32);
 
     });
 

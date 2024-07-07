@@ -2,9 +2,11 @@ package com.eihei.hq.Items;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.eihei.hq.hq;
 import com.eihei.hq.animations.GetAnimation;
+import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
@@ -74,12 +76,13 @@ public class HQSword extends Item{
         if(level.isClientSide()){
             Entity entity = Ways.getPointedEntity(player, 5);
             if(entity!=null){
+                double XRot = player.getXRot();
                 player.moveTo(entity.position());
-                int i = (int)Math.random()*2;
+                int i = new Random().nextInt(1)+1;
                 if(i<=1){
                     //45
                     double y = player.getY()+1.5+0.9;
-                    for(double m = 0;m<=180;m++,y=y-0.01){
+                    for(double m = XRot-90;m<=XRot+90;m++,y=y-0.01){
                         for(double distance = 1.5;distance<=2;distance=distance+0.1){
                         double n = Math.toRadians(m);
                         double x = player.getX() + Math.cos(n) * distance;
@@ -88,7 +91,22 @@ public class HQSword extends Item{
                         }
                     }
                 }
-                if(i>1){}
+                if(i>1){
+                    //90
+                    double YRot = player.getYRot();
+                    for(double m = YRot-90;m<=YRot+90;m++){
+                        for(double distance = 1.5;distance<=2;distance=distance+0.1){
+                            double r = 0;
+                            if(m<=YRot)r=r+1;
+                            if(m>YRot)r=r-1;
+                            double n = Math.toRadians(m);
+                            double y = player.getY()+1.5+Math.cos(n)*distance;
+                            double x = player.getX()+player.getLookAngle().x*r;
+                            double z = player.getZ()+player.getLookAngle().z*r;
+                            level.addParticle(DustParticleOptions.REDSTONE,x,y,z,0,0,0);
+                        }
+                    }
+                }
             }
         }
          /* 
