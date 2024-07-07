@@ -23,12 +23,12 @@ public class CanmengGui {
 
     RenderSystem.setShader(GameRenderer::getPositionShader);
     RenderSystem.setShaderColor(1.0F,1.0F,1.0F,1.0F);
-    RenderSystem.setShaderTexture(0, CANMENG);
+    RenderSystem.setShaderTexture(0,CANMENG);
 
-    GuiComponent.blit(poseStack,x-94,y-54,0,0,12,12,12,12);
-    GuiComponent.drawString(poseStack, gui.getFont(),
-            Double.toString(Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getOrCreateTag().getDouble("canmeng")),
-            x-94+5, y-54, 16777215);
+    for(int i=0;i<10;i++){
+        GuiComponent.blit(poseStack,x-94 + (i * 9),y-54,0,0,12,12,12,12);
+    }
+
     });
 
     
