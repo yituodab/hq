@@ -2,8 +2,10 @@ package com.eihei.hq.Items;
 
 import com.eihei.hq.registry.ModParticleTypes;
 import com.eihei.hq.tools.Ways;
+import com.mojang.datafixers.util.Function9;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -28,19 +30,25 @@ public class WETWand extends Item{
     }
     @Override
     public boolean hurtEnemy(ItemStack p_41395_, LivingEntity entity, LivingEntity p_41397_) {
-            Level level = Minecraft.getInstance().level;
-            entity.hurt(DamageSource.MAGIC,10);
+        Level level = Minecraft.getInstance().level;
+        entity.hurt(DamageSource.MAGIC,10);
+        for(int i=1;i<=100;i++){
             for(double y = entity.getY()-1;y<=entity.getY()+1;y=y+0.1){
                 double distance = 0;
-                if(y<=entity.getY())distance=distance+0.2;
-                else distance = distance-0.2;
+                if(y<=entity.getY())distance=distance+0.1;
+                else distance = distance-0.1;
                 for(int r = 0;r<=360;r=r+5){
                     double n = Math.toRadians(r);
-                    double x = entity.getX()+Math.cos(n)*1;
-                    double z = entity.getZ()+Math.sin(n)*1;
+                    double x = entity.getX()+Math.cos(n)*distance;
+                    double z = entity.getZ()+Math.sin(n)*distance;
                     level.addParticle(ModParticleTypes.BLACK, x, y, z, 0, 0, 0);
-
                 }
+            }
+        }
+        for(int r=0;r<=360;r=r+5){
+            double n = Math.toRadians(r);
+            level.addParticle(ModParticleTypes.BLACK, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n), 0, Math.sin(n));
+            level.addParticle(ModParticleTypes.PURPLE, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n), 0, Math.sin(n));
         }
         // TODO Auto-generated method stub
         return super.hurtEnemy(p_41395_, entity, p_41397_);

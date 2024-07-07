@@ -29,7 +29,7 @@ public class ClientEvent {
     public static class ClientForgeEvent{
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
-            if(Keybinding.HQ_KEY_MAPPING.consumeClick()){
+            if(Keybinding.BT_KEY_MAPPING.consumeClick()){
                 Player player = Minecraft.getInstance().player;
                 ItemStack item = player.getItemInHand(InteractionHand.MAIN_HAND);
                 if(item.getItem().equals(ModItems.HQ_SWORD.get())){
@@ -69,7 +69,7 @@ public class ClientEvent {
     public static class ClientModBusEvents{ 
         @SubscribeEvent
         public static void register(RegisterKeyMappingsEvent event){
-            event.register(Keybinding.HQ_KEY_MAPPING);
+            event.register(Keybinding.BT_KEY_MAPPING);
         }
     }
 }

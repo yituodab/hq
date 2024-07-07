@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.eihei.hq.hq;
 import com.eihei.hq.animations.GetAnimation;
+import com.eihei.hq.registry.ModParticleTypes;
 import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
@@ -39,8 +40,8 @@ public class HQSword extends Item{
     //TODO Auto-generated constructor stu
     @SuppressWarnings("null")
     @Override
-    public boolean hurtEnemy(ItemStack item, LivingEntity entity, LivingEntity pplayer){
-        AbstractClientPlayer player = Minecraft.getInstance().player;
+    public boolean hurtEnemy(ItemStack item, LivingEntity entity, LivingEntity player){
+        /*AbstractClientPlayer player = Minecraft.getInstance().player;
         KeyframeAnimationPlayer animation = new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(
             new ResourceLocation(hq.MODID,"player_animation/hq/hurt.json")));//GetAnimation.main("hq/hurt");
         PlayerAnimationAccess.getPlayerAnimLayer(player).addAnimLayer(1, animation);
@@ -51,24 +52,19 @@ public class HQSword extends Item{
                 
             }
         }
-        animation.setupAnim(1);
-        Vec3 pos = player.position();
-        Vec3 location = entity.position();
-       // Vec3 pos = Pos.getPos(play
-        float angle = player.getXRot() - 90;
-        //(new Vec3(entity.getX(),entity.getY(),entity.getZ()), new Vec3(player.getX(),player.getY(),player.getZ()));;
-        ClientLevel level = Minecraft.getInstance().level;
-        float MaxAngle = angle + 180;
-        //double line = pos.distanceTo(location);
-        for(double i = 0;i<=0.2;i=i+0.1){
-            for(double y = location.y + 0.9;angle < MaxAngle;y = y - 0.01,angle = angle + 1){
-                double r = Math.toRadians((double)angle);
-                double x = pos.x + Math.cos(r)*(3+i);
-                double z = pos.z + Math.sin(r)*(3+i);
-                level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0, 0, 0);
+        animation.setupAnim(1);*/
+        double XRot = player.getXRot() + 180;
+        Level level = Minecraft.getInstance().level;
+        double y = player.getY()+1.5+0.9;
+        for(double m = XRot-90;m<=XRot+90;m++,y=y-0.01){
+            for(double distance = 1.5;distance<=2;distance=distance+0.1){
+                double r = Math.toRadians(m);
+                double x = player.getX() + Math.cos(r)*distance;
+                double z = player.getZ() + Math.sin(r)*distance;
+                level.addParticle(ModParticleTypes.PURPLE, x, y, z, 0, 0, 0);
             }
         }
-        return super.hurtEnemy(item, entity, pplayer);
+        return super.hurtEnemy(item, entity, player);
         // TODO Auto-generated method stub
     }
     @Override
@@ -76,10 +72,10 @@ public class HQSword extends Item{
         if(level.isClientSide()){
             Entity entity = Ways.getPointedEntity(player, 5);
             if(entity!=null){
-                double XRot = player.getXRot();
+                double XRot = player.getXRot()+180;
                 player.moveTo(entity.position());
-                int i = new Random().nextInt(1)+1;
-                if(i<=1){
+                int i = new Random().nextInt(2);
+                if(i==0){
                     //45
                     double y = player.getY()+1.5+0.9;
                     for(double m = XRot-90;m<=XRot+90;m++,y=y-0.01){
@@ -91,7 +87,7 @@ public class HQSword extends Item{
                         }
                     }
                 }
-                if(i>1){
+                if(i==1){
                     //90
                     double YRot = player.getYRot();
                     for(double m = YRot-90;m<=YRot+90;m++){
