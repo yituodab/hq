@@ -3,6 +3,7 @@ package com.eihei.hq.Items;
 import com.eihei.hq.registry.ModParticleTypes;
 import com.eihei.hq.tools.Ways;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -27,8 +28,7 @@ public class WETWand extends Item{
     }
     @Override
     public boolean hurtEnemy(ItemStack p_41395_, LivingEntity entity, LivingEntity p_41397_) {
-        if(entity.getLevel().isClientSide){
-            Level level = entity.getLevel();
+            Level level = Minecraft.getInstance().level;
             entity.hurt(DamageSource.MAGIC,10);
             for(double y = entity.getY()-1;y<=entity.getY()+1;y=y+0.1){
                 double distance = 0;
@@ -41,8 +41,6 @@ public class WETWand extends Item{
                     level.addParticle(ModParticleTypes.BLACK, x, y, z, 0, 0, 0);
 
                 }
-            }
-
         }
         // TODO Auto-generated method stub
         return super.hurtEnemy(p_41395_, entity, p_41397_);
@@ -55,12 +53,14 @@ public class WETWand extends Item{
                 LivingEntity livingEntity = (LivingEntity)entity;
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,10*20,5));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,10*20,5));
-                for(double distance = 0.5;distance<=5;distance=distance+0.5){
-                    for(double r = 0;r<=360;r=r+5){
-                        double n = Math.toRadians(r);
-                        double x = entity.getX()+Math.cos(n)*distance;
-                        double z = entity.getZ()+Math.sin(n)*distance;
-                        level.addParticle(ModParticleTypes.BLACK,x,entity.getY(),z,0,0,0);
+                for(int d = 1;d<=100;d++){
+                    for(double distance = 0.1;distance<=5;distance=distance+0.1){
+                        for(double r = 0;r<=360;r=r+5){
+                            double n = Math.toRadians(r);
+                            double x = entity.getX()+Math.cos(n)*distance;
+                            double z = entity.getZ()+Math.sin(n)*distance;
+                            level.addParticle(ModParticleTypes.BLACK,x,entity.getY(),z,0,0,0);
+                        }
                     }
                 }
             }
