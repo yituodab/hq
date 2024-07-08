@@ -4,21 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.eihei.hq.hq;
-import com.eihei.hq.animations.GetAnimation;
 import com.eihei.hq.registry.ModParticleTypes;
-import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 public class HQSword extends Item{
 
@@ -89,17 +78,18 @@ public class HQSword extends Item{
                 }
                 if(i==1){
                     //90
-                    double YRot = player.getYRot();
-                    for(double m = YRot-90;m<=YRot+90;m++){
-                        for(double distance = 1.5;distance<=2;distance=distance+0.1){
-                            double r = 0;
-                            if(m<=YRot)r=r+1;
-                            if(m>YRot)r=r-1;
+                    double y = player.getY()+1.5-0.9;
+                    double r;
+                    for(double distance = 0.5;distance<=1;distance=distance+0.5){
+                        for(double m=XRot-90;m<=XRot+90;m++,y=y+0.01){
+                            r=distance;
+                            if(m<=XRot)r=r+0.01;
+                            if(m>XRot)r=r-0.01;
                             double n = Math.toRadians(m);
-                            double y = player.getY()+1.5+Math.cos(n)*distance;
-                            double x = player.getX()+player.getLookAngle().x*r;
-                            double z = player.getZ()+player.getLookAngle().z*r;
-                            level.addParticle(DustParticleOptions.REDSTONE,x,y,z,0,0,0);
+                            double x = player.getX() + Math.cos(n)*r;
+                            double z = player.getZ() + Math.sin(n)*r;
+                            level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0, 0, 0);
+
                         }
                     }
                 }
