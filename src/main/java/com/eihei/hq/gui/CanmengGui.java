@@ -14,7 +14,7 @@ public class CanmengGui {
             "textures/gui/canmeng.png");
     public static final IGuiOverlay HUD_CANMENG = ((gui, poseStack, partialTick, width, height) -> {
         int x = (width/5)*4;
-        int y = height/5;
+        int y = (height/10)*9;
         RenderSystem.setShader(GameRenderer::getPositionShader);
         RenderSystem.setShaderColor(1.0F,1.0F,1.0F,1.0F);
         RenderSystem.setShaderTexture(0,CANMENG);

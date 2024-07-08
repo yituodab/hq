@@ -54,7 +54,7 @@ public class HQSword extends Item{
         }
         animation.setupAnim(1);*/
         double XRot = player.getXRot() + 180;
-        Level level = Minecraft.getInstance().level;
+        Level level = Minecraft.getInstance().player.getLevel();
         double y = player.getY()+1.5+0.9;
         for(double m = XRot-90;m<=XRot+90;m++,y=y-0.01){
             for(double distance = 1.5;distance<=2;distance=distance+0.1){

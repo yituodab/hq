@@ -5,9 +5,11 @@ import com.eihei.hq.tools.Ways;
 import com.mojang.datafixers.util.Function9;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,9 +32,9 @@ public class WETWand extends Item{
     }
     @Override
     public boolean hurtEnemy(ItemStack p_41395_, LivingEntity entity, LivingEntity p_41397_) {
-        Level level = Minecraft.getInstance().level;
+        Level level = Minecraft.getInstance().player.getLevel();
         entity.hurt(DamageSource.MAGIC,10);
-        for(int i=1;i<=100;i++){
+        if(level != null){
             for(double y = entity.getY()-1;y<=entity.getY()+1;y=y+0.1){
                 double distance = 0;
                 if(y<=entity.getY())distance=distance+0.1;
@@ -44,12 +46,12 @@ public class WETWand extends Item{
                     level.addParticle(ModParticleTypes.BLACK, x, y, z, 0, 0, 0);
                 }
             }
-        }
         for(int r=0;r<=360;r=r+5){
             double n = Math.toRadians(r);
-            level.addParticle(ModParticleTypes.BLACK, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n), 0, Math.sin(n));
-            level.addParticle(ModParticleTypes.PURPLE, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n), 0, Math.sin(n));
+            level.addParticle(ModParticleTypes.BLACK, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n)*3, 0, Math.sin(n)*3);
+            level.addParticle(ModParticleTypes.PURPLE, entity.getX(), entity.getY(), entity.getZ(), Math.cos(n)*3, 0, Math.sin(n)*3);
         }
+    }
         // TODO Auto-generated method stub
         return super.hurtEnemy(p_41395_, entity, p_41397_);
     }
@@ -61,7 +63,6 @@ public class WETWand extends Item{
                 LivingEntity livingEntity = (LivingEntity)entity;
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,10*20,5));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,10*20,5));
-                for(int d = 1;d<=100;d++){
                     for(double distance = 0.1;distance<=5;distance=distance+0.1){
                         for(double r = 0;r<=360;r=r+5){
                             double n = Math.toRadians(r);
@@ -70,7 +71,6 @@ public class WETWand extends Item{
                             level.addParticle(ModParticleTypes.BLACK,x,entity.getY(),z,0,0,0);
                         }
                     }
-                }
             }
         }
         // TODO Auto-generated method stub
