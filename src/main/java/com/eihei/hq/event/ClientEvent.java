@@ -59,8 +59,8 @@ public class ClientEvent {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event){
         PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
-        new ResourceLocation(hq.MODID,"animation"),
-        42, 
+        new ResourceLocation(hq.MODID,"player_animation"),
+        1000, 
         ClientEvent::registerPlayerAnimation);
     }
     private static IAnimation registerPlayerAnimation(AbstractClientPlayer player){
