@@ -4,20 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.eihei.hq.hq;
-import com.eihei.hq.registry.ModParticleTypes;
+import com.eihei.hq.animations.PlayAnimation;
 import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
 
-import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -41,9 +34,9 @@ public class HQSword extends Item{
     @SuppressWarnings("null")
     @Override
     public boolean hurtEnemy(ItemStack item, LivingEntity entity, LivingEntity player){
-        AbstractClientPlayer pplayer = Minecraft.getInstance().player;
+        /*AbstractClientPlayer pplayer = Minecraft.getInstance().player;
         KeyframeAnimationPlayer animation = new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(
-            new ResourceLocation(hq.MODID,"hurt")));//GetAnimation.main("hq/hurt");
+            new ResourceLocation(hq.MODID,"shoot")));//GetAnimation.main("hq/hurt");
         if(player != null){
             var animations = (ModifierLayer<IAnimation>)PlayerAnimationAccess.getPlayerAssociatedData(
                 pplayer).
@@ -64,7 +57,7 @@ public class HQSword extends Item{
                 double z = player.getZ() + Math.sin(r)*distance;
                 level.addParticle(ModParticleTypes.PURPLE, x, y, z, 0, 0, 0);
             }
-        }
+        }*/
         entity.hurt(DamageSource.MAGIC,14);
         return super.hurtEnemy(item, entity, player);
         // TODO Auto-generated method stub
@@ -74,14 +67,15 @@ public class HQSword extends Item{
         if(level.isClientSide()){
             Entity entity = Ways.getPointedEntity(player, 5);
             if(entity!=null){
-                double XRot = player.getXRot()+180;
-                if(player.position().distanceTo(entity.position())>2)player.moveTo(
-                    Pos.main(player.position().distanceTo(entity.position())-2, player));
+                entity.hurt(DamageSource.MAGIC, 40);
+            }
+            double XRot = player.getXRot()+180;
                 int i = new Random().nextInt(2);
                 if(i==0){
+                    PlayAnimation.main((AbstractClientPlayer)player, "skill45");
                     //45
-                    double y = player.getY()+1.5+0.9;
-                    for(double m = XRot-90;m<=XRot+90;m++,y=y-0.01){
+                    double y = player.getY()+1.5-0.9;
+                    for(double m = XRot-90;m<=XRot+90;m++,y=y+0.01){
                         for(double distance = 1.5;distance<=2;distance=distance+0.1){
                         double n = Math.toRadians(m);
                         if(n<0)n=n+PI;
@@ -93,14 +87,13 @@ public class HQSword extends Item{
                     }
                 }
                 if(i==1){
+                    PlayAnimation.main((AbstractClientPlayer)player, "skill90");
                     //90
-                    double y = player.getY()+1.5-0.9;
-                    double r;
-                    double r2;
-                    for(double distance = 0.4;distance<=0.9;distance=distance+0.1){
-                        r=distance;
-                        r2=distance+0.9;
-                        for(double m=XRot-90;m<=XRot;m++,y=y+0.01,r=r+0.01){
+                    double y = player.getY()+1.5-1.8;
+                    for(double distance = 0.6;distance<=1.1;distance=distance+0.1){
+                        double r=distance;
+                        double r2=distance+0.9;
+                        for(double m=XRot-90;m<=XRot;m++,y=y+0.02,r=r+0.01){
                             double n = Math.toRadians(m);
                             if(n<0)n=n+PI;
                             if(n>PI)n=n-PI;
@@ -108,7 +101,7 @@ public class HQSword extends Item{
                             double z = player.getZ() + Math.sin(n)*r;
                             level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0, 0, 0);
                         }
-                        for(double m=XRot;m<=XRot+90;m++,y=y+0.01,r2=r2-0.01){
+                        for(double m=XRot;m<=XRot+90;m++,y=y+0.02,r2=r2-0.01){
                             double n = Math.toRadians(m);
                             if(n<0)n=n+PI;
                             if(n>PI)n=n-PI;
@@ -118,8 +111,7 @@ public class HQSword extends Item{
                         }
                     }
                 }
-                entity.hurt(DamageSource.MAGIC,40);
-            }
+            player.getCooldowns().addCooldown(this, 1*20);
         }
          /* 
             if(entity != null)hqstill.Still(entity, player, level,player.getItemInHand(p_41434_).getItem());

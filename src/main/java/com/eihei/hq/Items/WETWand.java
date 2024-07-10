@@ -23,7 +23,7 @@ public class WETWand extends Item{
     }
     @Override
     public boolean hurtEnemy(ItemStack p_41395_, LivingEntity entity, LivingEntity p_41397_) {
-        Level level = Minecraft.getInstance().player.getLevel();
+        /*Level level = Minecraft.getInstance().player.getLevel();
         entity.hurt(DamageSource.MAGIC,14);
         double distance=0;
         if(level != null){
@@ -42,7 +42,7 @@ public class WETWand extends Item{
             level.addParticle(ModParticleTypes.BLACK, entity.getX(), entity.getY()+1, entity.getZ(), Math.cos(n)*3, 0, Math.sin(n)*3);
             level.addParticle(ModParticleTypes.PURPLE, entity.getX(), entity.getY()+1, entity.getZ(), Math.cos(n)*3, 0, Math.sin(n)*3);
         }
-    }
+    }*/
         // TODO Auto-generated method stub
         return super.hurtEnemy(p_41395_, entity, p_41397_);
     }

@@ -1,6 +1,54 @@
 {
-    "parent":"minecraft:item/handheld",
-    "textures":{
-        "layer0":"hq:items/hq_sword"
-    }
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "hq:item/hq",
+		"particle": "hq:item/hq"
+	},
+	"elements": [
+		{
+			"from": [7, -1, 7.5],
+			"to": [8, 32, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [0.5, 0.5, 0.75, 8.75], "texture": "#0"},
+				"east": {"uv": [0, 0.5, 0.5, 8.75], "texture": "#0"},
+				"south": {"uv": [1.25, 0.5, 1.5, 8.75], "texture": "#0"},
+				"west": {"uv": [0.75, 0.5, 1.25, 8.75], "texture": "#0"},
+				"up": {"uv": [0.75, 0.5, 0.5, 0], "texture": "#0"},
+				"down": {"uv": [1, 0, 0.75, 0.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, -11, 7],
+			"to": [8, -2, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [0.75, 13.75, 1, 16], "texture": "#0"},
+				"east": {"uv": [0, 13.75, 0.75, 16], "texture": "#0"},
+				"south": {"uv": [1.75, 13.75, 2, 16], "texture": "#0"},
+				"west": {"uv": [1, 13.75, 1.75, 16], "texture": "#0"},
+				"up": {"uv": [1, 13.75, 0.75, 13], "texture": "#0"},
+				"down": {"uv": [1.25, 13, 1, 13.75], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.5, -2, 5.5],
+			"to": [8.5, -1, 11.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, -2, 6]},
+			"faces": {
+				"north": {"uv": [4.5, 2.75, 5, 3], "texture": "#0"},
+				"east": {"uv": [3, 2.75, 4.5, 3], "texture": "#0"},
+				"south": {"uv": [6.5, 2.75, 7, 3], "texture": "#0"},
+				"west": {"uv": [5, 2.75, 6.5, 3], "texture": "#0"},
+				"up": {"uv": [5, 2.75, 4.5, 1.25], "texture": "#0"},
+				"down": {"uv": [5.5, 1.25, 5, 2.75], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0.5, 11, 2.5]
+		}
+	}
 }
