@@ -11,6 +11,7 @@ import com.eihei.hq.tools.Ways;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -67,15 +68,19 @@ public class HQSword extends Item{
         if(level.isClientSide()){
             Entity entity = Ways.getPointedEntity(player, 5);
             if(entity!=null){
-                entity.hurt(DamageSource.MAGIC, 40);
+                LivingEntity livingEntity = (LivingEntity)entity;
+                if(livingEntity.getHealth()<=40)entity.kill();
+                else entity.hurt(DamageSource.MAGIC,40);
+                ServerPlayer pplayer = (ServerPlayer)player;
+                pplayer.setExperienceLevels(pplayer.experienceLevel - 1);
             }
             double XRot = player.getXRot()+180;
                 int i = new Random().nextInt(2);
                 if(i==0){
                     PlayAnimation.main((AbstractClientPlayer)player, "skill45");
                     //45
-                    double y = player.getY()+1.5-0.9;
-                    for(double m = XRot-90;m<=XRot+90;m++,y=y+0.01){
+                    double y = player.getY()+1.5-1.8;
+                    for(double m = XRot-90;m<=XRot+90;m++,y=y+0.02){
                         for(double distance = 1.5;distance<=2;distance=distance+0.1){
                         double n = Math.toRadians(m);
                         if(n<0)n=n+PI;
