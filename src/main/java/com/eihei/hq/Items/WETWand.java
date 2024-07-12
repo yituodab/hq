@@ -1,6 +1,7 @@
 package com.eihei.hq.Items;
 
 import com.eihei.hq.registry.ModParticleTypes;
+import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class WETWand extends Item{
 
@@ -54,6 +56,8 @@ public class WETWand extends Item{
                 LivingEntity livingEntity = (LivingEntity)entity;
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,10*20,5));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,10*20,5));
+                player.experienceLevel = player.experienceLevel -1;
+                for(int i = 1;i<=10;i++){
                     for(double distance = 0.1;distance<=5;distance=distance+0.1){
                         for(double r = 0;r<=360;r=r+5){
                             double n = Math.toRadians(r);
@@ -62,6 +66,13 @@ public class WETWand extends Item{
                             level.addParticle(ModParticleTypes.BLACK,x,entity.getY(),z,0,0,0);
                         }
                     }
+                    /*try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }*/
+                }
             }
         }
         // TODO Auto-generated method stub

@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.Random;
 
 import com.eihei.hq.animations.PlayAnimation;
+import com.eihei.hq.registry.ModParticleTypes;
 import com.eihei.hq.tools.Pos;
 import com.eihei.hq.tools.Ways;
 
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +23,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 public class HQSword extends Item{
 
@@ -68,11 +73,13 @@ public class HQSword extends Item{
         if(level.isClientSide()){
             Entity entity = Ways.getPointedEntity(player, 5);
             if(entity!=null){
+                Skill(player, level, entity);
+            }
+                /*
                 LivingEntity livingEntity = (LivingEntity)entity;
                 if(livingEntity.getHealth()<=40)entity.kill();
                 else entity.hurt(DamageSource.MAGIC,40);
-                ServerPlayer pplayer = (ServerPlayer)player;
-                pplayer.setExperienceLevels(pplayer.experienceLevel - 1);
+                player.experienceLevel = player.experienceLevel - 1;
             }
             double XRot = player.getXRot()+180;
                 int i = new Random().nextInt(2);
@@ -116,8 +123,9 @@ public class HQSword extends Item{
                         }
                     }
                 }
-            player.getCooldowns().addCooldown(this, 1*20);
+            player.getCooldowns().addCooldown(this, 1*20);*/
         }
+        
          /* 
             if(entity != null)hqstill.Still(entity, player, level,player.getItemInHand(p_41434_).getItem());
         }*/
@@ -134,6 +142,31 @@ public class HQSword extends Item{
 
         // TODO Auto-generated method stub
         super.inventoryTick(item, p_41405_, p_41406_, p_41407_, p_41408_);
+    }
+    public static void Skill(Player player,Level level,Entity entity){
+        if(level.isClientSide()){
+            entity.lookAt(Anchor.EYES, player.getEyePosition());
+            double XRot = entity.getXRot();
+            Vec3 angle1 = new Vec3(entity.getX()+Math.cos(Math.toRadians(XRot+90))*2,0,entity.getZ()+Math.cos(Math.toRadians(XRot+90))*2);
+            Vec3 angle2 = new Vec3(entity.getX()+Math.cos(Math.toRadians(XRot-90))*2,0,entity.getZ()+Math.cos(Math.toRadians(XRot-90))*2);
+            Vec3 vec1 = new Vec3(angle1.x,entity.getY(),angle1.z);
+            Vec3 vec2 = new Vec3(angle2.x,entity.getY()+4,angle2.z);
+            Vec3 vec3 = new Vec3(angle1.x,entity.getY()+4,angle1.z);
+            Vec3 vec4 = new Vec3(angle2.x,entity.getY(),angle2.z);
+            Vec3 add1 = Pos.getAdd(vec1, vec2);
+            Vec3 add2 = Pos.getAdd(vec3, vec4);
+            for(int n = 1;n<=5;n++){
+                for(int i=1;i<=6;i++,vec1=vec1.add(add1)){level.addParticle(ModParticleTypes.PURPLE,vec1.x,vec1.y,vec1.z,0,0,0);}
+                for(int i=1;i<=6;i++,vec3=vec4.add(add2)){level.addParticle(ModParticleTypes.PURPLE,vec3.x,vec3.y,vec3.z,0,0,0);}
+            }
+            /*try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            level.addParticle(ModParticleTypes.BLACK,entity.getX(),entity.getY(),entity.getZ(),0,0,0);*/
+        }
     }
 }
             //(ServerLevel)player.getLevel().addParticle(, z, count, i, r, x, z);
